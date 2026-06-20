@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { t, languages, plans, LangCode } from '@/lib/i18n';
+import { getUser } from '@/lib/auth';
 
 const WALLETS = [
   {
@@ -27,6 +28,7 @@ const WALLETS = [
 ];
 
 const Index = () => {
+  const user = getUser();
   const [lang, setLang] = useState<LangCode>('ru');
   const [cart, setCart] = useState<string[]>([]);
   const [copied, setCopied] = useState<string | null>(null);
@@ -86,6 +88,20 @@ const Index = () => {
                 </span>
               )}
             </button>
+
+            {user ? (
+              <a href="/cabinet">
+                <Button size="sm" variant="outline" className="glass hidden sm:flex">
+                  <Icon name="LayoutDashboard" size={15} className="mr-1" /> {tr.nav_cabinet}
+                </Button>
+              </a>
+            ) : (
+              <a href="/login">
+                <Button size="sm" className="box-glow hidden sm:flex">
+                  <Icon name="LogIn" size={15} className="mr-1" /> Войти
+                </Button>
+              </a>
+            )}
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

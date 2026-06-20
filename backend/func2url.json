@@ -1,4 +1,6 @@
 {
+  "ask": "https://functions.poehali.dev/086bae18-20de-4bad-a466-ed95e8c4d395",
+  "admin": "https://functions.poehali.dev/a095ac16-c32e-48be-8ee3-6f5275ca6453",
   "auth": "https://functions.poehali.dev/141d0b9c-5f1e-4ef6-87ee-d92a373f291b",
   "orders": "https://functions.poehali.dev/aa4074f6-6eaa-4b70-adf3-711ae908e561",
   "downloads": "https://functions.poehali.dev/5d4f7b73-ec27-4cdd-ac24-d3a777f1b14c"

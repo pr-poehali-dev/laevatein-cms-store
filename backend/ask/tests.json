@@ -1,0 +1,28 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS CORS",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "No api_key",
+      "method": "POST",
+      "path": "/",
+      "body": {"prompt": "hello"},
+      "expectedStatus": 400,
+      "expectedBody": {"success": false},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Invalid api_key",
+      "method": "POST",
+      "path": "/",
+      "body": {"api_key": "INVALID-0000-0000-0000-0000", "prompt": "test"},
+      "expectedStatus": 403,
+      "expectedBody": {"success": false},
+      "bodyMatcher": "partial"
+    }
+  ]
+}
