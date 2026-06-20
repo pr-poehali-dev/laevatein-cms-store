@@ -1,0 +1,19 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS CORS",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Unknown action",
+      "method": "POST",
+      "path": "/",
+      "body": {"action": "nope"},
+      "expectedStatus": 400,
+      "expectedBody": {"error": "string"},
+      "bodyMatcher": "partial"
+    }
+  ]
+}
