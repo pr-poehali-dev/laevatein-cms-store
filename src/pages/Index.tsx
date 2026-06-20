@@ -9,13 +9,38 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { t, languages, plans, LangCode } from '@/lib/i18n';
 
+const WALLETS = [
+  {
+    network: 'Solana (SOL)',
+    token: 'USDT',
+    address: 'TFAXzVD1hevM6Ch9WDPpUeELwZ75P5MgY4zEBZemtGD',
+    icon: '◎',
+    color: '#9945FF',
+  },
+  {
+    network: 'TRON (TRX)',
+    token: 'USDT TRC-20',
+    address: 'TLgiRKp1jHM55zdTb63ojpZdKpU29f1ixd',
+    icon: '◈',
+    color: '#EF3A3A',
+  },
+];
+
 const Index = () => {
   const [lang, setLang] = useState<LangCode>('ru');
   const [cart, setCart] = useState<string[]>([]);
+  const [copied, setCopied] = useState<string | null>(null);
   const tr = t[lang];
   const current = languages.find((l) => l.code === lang)!;
 
   const addToCart = (id: string) => setCart((c) => [...c, id]);
+
+  const copyAddress = (addr: string) => {
+    navigator.clipboard.writeText(addr).then(() => {
+      setCopied(addr);
+      setTimeout(() => setCopied(null), 2000);
+    });
+  };
 
   const features = [
     { icon: 'Zap', title: tr.f_speed_t, desc: tr.f_speed_d },
@@ -177,6 +202,60 @@ const Index = () => {
               </Button>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* USDT кошельки */}
+      <section className="container mx-auto px-4 pb-10">
+        <div className="mx-auto max-w-3xl rounded-2xl glass-strong p-8">
+          <div className="mb-6 flex items-center gap-3">
+            <div className="grid h-10 w-10 place-items-center rounded-xl bg-primary/15 box-glow">
+              <Icon name="Wallet" size={22} className="text-primary" />
+            </div>
+            <div>
+              <h3 className="font-display text-lg font-bold">Оплата в USDT</h3>
+              <p className="text-sm text-muted-foreground">Переведите точную сумму на один из кошельков</p>
+            </div>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            {WALLETS.map((w) => (
+              <div key={w.address} className="rounded-xl glass p-5 transition hover:box-glow">
+                <div className="mb-3 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl" style={{ color: w.color }}>{w.icon}</span>
+                    <div>
+                      <div className="text-sm font-semibold">{w.network}</div>
+                      <div className="text-xs text-muted-foreground">{w.token}</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => copyAddress(w.address)}
+                    className="flex items-center gap-1.5 rounded-lg bg-primary/15 px-3 py-1.5 text-xs font-semibold text-primary transition hover:bg-primary/25"
+                  >
+                    {copied === w.address ? (
+                      <><Icon name="Check" size={13} /> Скопировано</>
+                    ) : (
+                      <><Icon name="Copy" size={13} /> Копировать</>
+                    )}
+                  </button>
+                </div>
+                <div className="break-all rounded-lg bg-black/30 px-3 py-2.5 font-mono text-xs text-foreground/80">
+                  {w.address}
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="mt-5 text-center text-xs text-muted-foreground">
+            После оплаты напишите нам в{' '}
+            <a href="https://t.me/LaevateinSupportCMS_bot" target="_blank" rel="noreferrer" className="text-primary underline">
+              Telegram
+            </a>
+            {' '}или на{' '}
+            <a href="mailto:laevateincmssupport@gmail.com" className="text-primary underline">
+              email
+            </a>
+            {' '}— мы активируем вашу лицензию вручную.
+          </p>
         </div>
       </section>
 
